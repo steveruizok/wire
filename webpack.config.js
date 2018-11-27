@@ -23,7 +23,7 @@ module.exports = {
     minimizer: [
       new UglifyJsPlugin({
         uglifyOptions: {
-          include: /\.min\.js$/,
+          test: /\.min\.js$/,
           minimize: true
         }
       })

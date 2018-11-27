@@ -1,16 +1,35 @@
-import {LoDashStatic}  from "lodash";
+import Node from '../Node';
+import Pin from '../Pin';
 
 export namespace Wire {
   
-  export interface Library {
+	export interface Library {
+		Node: Node;
+		Pin: Pin;
+	}
 
-  }
+	export namespace Node {
+		export interface PinProps {
+			id: string;
+			value: string | number | boolean;
+			label: string;
+			valueType?: string;
+		}
 
-  export namespace Node {
+		export interface NodeProps {
+			id: string;
+			inputPins: PinProps[];
+			outputPins: PinProps[];
+		}
+	}
 
-    export interface NodeProps {
-
-    }
-
-  }
+	export namespace Connection {
+		export interface ConnectionProps {
+			id: string;
+			fromNode: Node;
+			fromPin: Pin;
+			toNode: Node;
+			toPin: Pin;
+		}
+	}
 }

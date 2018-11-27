@@ -2,7 +2,7 @@
   "name": "wire",
   "version": "0.0.1",
   "description": "A visual scripting framework",
-  "main": "index.js",
+  "main": "lib/wire.js",
   "scripts": {
     "prepublish": "npm run build",
     "build": "webpack"
@@ -19,11 +19,13 @@
   "homepage": "https://github.com/emilwidlund/wire#readme",
   "dependencies": {
     "@types/lodash": "^4.14.118",
+    "@types/uuid": "^3.4.4",
     "awesome-typescript-loader": "^5.2.1",
     "eventemitter3": "^3.1.0",
     "lodash": "^4.17.11",
     "typescript": "^3.1.6",
     "uglifyjs-webpack-plugin": "^2.0.1",
+    "uuid": "^3.3.2",
     "webpack": "^4.26.1"
   },
   "devDependencies": {
