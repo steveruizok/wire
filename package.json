@@ -1,0 +1,32 @@
+{
+  "name": "wire",
+  "version": "0.0.1",
+  "description": "A visual scripting framework",
+  "main": "index.js",
+  "scripts": {
+    "prepublish": "npm run build",
+    "build": "webpack"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/emilwidlund/wire.git"
+  },
+  "author": "Emil Widlund",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/emilwidlund/wire/issues"
+  },
+  "homepage": "https://github.com/emilwidlund/wire#readme",
+  "dependencies": {
+    "@types/lodash": "^4.14.118",
+    "awesome-typescript-loader": "^5.2.1",
+    "eventemitter3": "^3.1.0",
+    "lodash": "^4.17.11",
+    "typescript": "^3.1.6",
+    "uglifyjs-webpack-plugin": "^2.0.1",
+    "webpack": "^4.26.1"
+  },
+  "devDependencies": {
+    "webpack-cli": "^3.1.2"
+  }
+}
