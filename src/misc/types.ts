@@ -13,6 +13,7 @@ export namespace Wire {
 
 		export interface NodeProps {
 			id: string;
+			label: string;
 			inputPins: PinProps[];
 			outputPins: PinProps[];
 		}

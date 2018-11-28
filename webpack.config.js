@@ -33,7 +33,7 @@ module.exports = {
 						comments: false
 					}
 				}
-			}),
+			})
 		]
 	},
 	module: {

@@ -3,6 +3,7 @@ import * as _ from 'lodash';
 import {v4 as uuid} from 'uuid';
 
 import PinTypes from './misc/PinTypes';
+import Node from './Node';
 
 import {Wire} from './misc/types';
 
@@ -11,15 +12,22 @@ export default class Pin extends EventEmitter {
 	id: string;
 	label: string;
 	_value: any;
+	node: Node;
 	valueType?: string;
 
-  	constructor(props: Wire.Node.PinProps) {
-    	super();
+  	constructor(props: Wire.Node.PinProps, node: Node) {
+		super();
+		
+		props = _.defaults(props, {
+			id: uuid(),
+			label: 'Untitled'
+		});
 
-		this.id = props.id || uuid();
+		this.id = props.id;
 		this.label = props.label;
+		this.value = props.value;
+		this.node = node;
 		this.valueType = props.valueType;
-    	this.value = props.value;
   	}
 
   	_validateValue(value: any) {
@@ -52,11 +60,16 @@ export default class Pin extends EventEmitter {
 
 		return validator(value);
 	}
+
+	get value() {
+		return this._value;
+	}
 	  
 	set value(value: any) {
 		if (this._validateValue(value)) {
 			this._value = value;
 			this.emit('pinValueUpdate', value);
+			console.log('Pin Value Updated', this, value);
 		}
 	}
 }

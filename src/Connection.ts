@@ -1,39 +1,44 @@
 import * as EventEmitter from 'eventemitter3';
+import * as _ from 'lodash';
 import {v4 as uuid} from 'uuid';
 
 import {Wire} from './misc/types';
-import Node from './Node';
 import Pin from './Pin';
+import Store from './Store';
 
-export class Connection extends EventEmitter {
+export default class Connection extends EventEmitter {
 
     id: string;
-    fromNode: Node;
     fromPin: Pin;
-    toNode: Node;
     toPin: Pin;
 
     constructor(props: Wire.Connection.ConnectionProps) {
         super();
 
-        this.id = props.id || uuid();
-        this.fromNode = props.fromNode;
+        this._updateToPinValue = this._updateToPinValue.bind(this);
+
+        props = _.defaults(props, {
+			id: uuid()
+		});
+
+        this.id = props.id;
         this.fromPin = props.fromPin;
-        this.toNode = props.toNode;
         this.toPin = props.toPin;
 
-        this._setupEventListeners();
+        this._setupEventListener();
+
+        Store.addConnection(this);
     }
 
     _updateToPinValue(value: any) {
         this.toPin.value = value;
     }
     
-    _setupEventListeners() {
+    _setupEventListener() {
         this.fromPin.on('pinValueUpdate', this._updateToPinValue);
     }
 
-    removeEventListeners() {
+    removeEventListener() {
         this.fromPin.removeListener('pinValueUpdate', this._updateToPinValue);
     }
 }
