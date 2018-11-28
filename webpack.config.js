@@ -13,6 +13,7 @@ module.exports = {
     filename: '[name].js',
     libraryTarget: 'umd',
     library: 'Wire',
+    libraryExport: 'default',
     umdNamedDefine: true
   },
   resolve: {
@@ -33,10 +34,7 @@ module.exports = {
     rules: [{
       test: /\.tsx?$/,
       loader: 'awesome-typescript-loader',
-      exclude: /node_modules/,
-      query: {
-        declaration: false,
-      }
+      exclude: /node_modules/
     }]
   }
 }

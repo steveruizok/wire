@@ -4,8 +4,7 @@ import Pin from '../Pin';
 export namespace Wire {
   
 	export interface Library {
-		Node: Node;
-		Pin: Pin;
+		
 	}
 
 	export namespace Node {
