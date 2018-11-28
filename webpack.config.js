@@ -3,38 +3,25 @@ const path = require('path');
 const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
 
 module.exports = {
-  entry: {
-    'wire': './src/Wire.ts',
-    'wire.min': './src/Wire.ts'
-  },
-  mode: 'production',
-  output: {
-    path: path.resolve(__dirname, 'lib'),
-    filename: '[name].js',
-    libraryTarget: 'umd',
-    library: 'Wire',
-    libraryExport: 'default',
-    umdNamedDefine: true
-  },
-  resolve: {
-    extensions: ['.ts', '.tsx', '.js']
-  },
-  devtool: 'source-map',
-  optimization: {
-    minimizer: [
-      new UglifyJsPlugin({
-        uglifyOptions: {
-          test: /\.min\.js$/,
-          minimize: true
-        }
-      })
-    ]
-  },
-  module: {
-    rules: [{
-      test: /\.tsx?$/,
-      loader: 'awesome-typescript-loader',
-      exclude: /node_modules/
-    }]
-  }
+	entry: './src/Wire.ts',
+	mode: 'production',
+	output: {
+		path: path.resolve(__dirname, 'lib'),
+		filename: 'wire.js',
+		libraryTarget: 'umd',
+		library: 'Wire',
+		libraryExport: 'default',
+		umdNamedDefine: true
+	},
+	resolve: {
+		extensions: ['.ts', '.tsx', '.js']
+	},
+	devtool: 'source-map',
+	module: {
+		rules: [{
+			test: /\.tsx?$/,
+			loader: 'awesome-typescript-loader',
+			exclude: /node_modules/
+		}]
+	}
 }
