@@ -2,10 +2,6 @@ import Node from '../Node';
 import Pin from '../Pin';
 
 export namespace Wire {
-  
-	export interface Library {
-		
-	}
 
 	export namespace Node {
 		export interface PinProps {

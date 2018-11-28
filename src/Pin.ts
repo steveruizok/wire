@@ -16,9 +16,9 @@ export default class Pin extends EventEmitter {
     	super();
 
 		this.id = props.id || uuid();
-    	this.value = props.value;
 		this.label = props.label;
 		this.valueType = props.valueType;
+    	this.value = props.value;
   	}
 
   	_validateValue(value: any) {

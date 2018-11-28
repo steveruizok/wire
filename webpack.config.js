@@ -4,7 +4,7 @@ const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
 
 module.exports = {
 	entry: './src/Wire.ts',
-	mode: 'production',
+	mode: 'development',
 	output: {
 		path: path.resolve(__dirname, 'lib'),
 		filename: 'wire.js',
@@ -17,6 +17,25 @@ module.exports = {
 		extensions: ['.ts', '.tsx', '.js']
 	},
 	devtool: 'source-map',
+	optimization: {
+		minimizer: [
+			new UglifyJsPlugin({
+				uglifyOptions:{
+					compress:{
+						ecma:5
+					},
+					mangle:{
+						'properties': true,
+						'keep_fnames': true,
+						'keep_classnames': true
+					},
+					output: {
+						comments: false
+					}
+				}
+			}),
+		]
+	},
 	module: {
 		rules: [{
 			test: /\.tsx?$/,
