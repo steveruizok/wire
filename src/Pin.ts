@@ -10,7 +10,8 @@ export default class Pin extends EventEmitter {
 
 	id: string;
 	label: string;
-	valueType?: string;  
+	_value: any;
+	valueType?: string;
 
   	constructor(props: Wire.Node.PinProps) {
     	super();
@@ -52,9 +53,9 @@ export default class Pin extends EventEmitter {
 		return validator(value);
 	}
 	  
-	set value(value: string | number | boolean) {
+	set value(value: any) {
 		if (this._validateValue(value)) {
-			this.value = value;
+			this._value = value;
 			this.emit('pinValueUpdate', value);
 		}
 	}
