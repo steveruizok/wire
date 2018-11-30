@@ -80,7 +80,7 @@ export default class Pin extends EventEmitter {
 	set value(value: any) {
 		if (this.validateValue(value)) {
 			this._value = value;
-			this.emit('pinValueUpdate', value);
+			this.emit('value:update', value);
 		}
 	}
 }
