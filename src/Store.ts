@@ -12,7 +12,7 @@ export class Store extends EventEmitter {
     addNode(node: Node) {
         this.nodes.push(node);
 
-        this.emit('node:added', node, this.nodes);
+        this.emit('nodes:updated', this.nodes);
     }
 
     removeNode(node: Node) {
@@ -21,13 +21,13 @@ export class Store extends EventEmitter {
 
         this.nodes.splice(nodeIndex, 1);
 
-        this.emit('node:removed', node, this.nodes);
+        this.emit('nodes:updated', this.nodes);
     }
 
     addConnection(connection: Connection) {
         this.connections.push(connection);
 
-        this.emit('connection:added', connection, this.connections);
+        this.emit('connections:updated', this.connections);
     }
 
     removeConnection(connection: Connection) {
@@ -37,7 +37,7 @@ export class Store extends EventEmitter {
         connection.removeEventListener();
         this.connections.splice(connectionIndex, 1);
 
-        this.emit('connection:removed', connection, this.connections);
+        this.emit('connections:updated', this.connections);
     }
 }
 

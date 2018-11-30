@@ -17,7 +17,7 @@ export default class Pin extends EventEmitter {
 	valueType?: string;
 	enumerableValue?: boolean;
 
-  	constructor(props: Wire.Node.PinProps, node: Node, isInputPin?: boolean) {
+  	constructor(props: Wire.Node.PinProps, node: Node, isInputPin: boolean = false) {
 		super();
 		
 		props = _.defaults(props, {
