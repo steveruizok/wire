@@ -11,16 +11,19 @@ export default class Pin extends EventEmitter {
 
 	id: string;
 	label: string;
+	isInputPin: boolean;
 	_value: any;
 	node: Node;
 	valueType?: string;
+	enumerableValue?: boolean;
 
-  	constructor(props: Wire.Node.PinProps, node: Node) {
+  	constructor(props: Wire.Node.PinProps, node: Node, isInputPin?: boolean) {
 		super();
 		
 		props = _.defaults(props, {
 			id: uuid(),
-			label: 'Untitled'
+			label: 'Untitled',
+			valueIsArray: false
 		});
 
 		this.id = props.id;
@@ -28,9 +31,11 @@ export default class Pin extends EventEmitter {
 		this.value = props.value;
 		this.node = node;
 		this.valueType = props.valueType;
+		this.enumerableValue = props.enumerableValue;
+		this.isInputPin = isInputPin;
   	}
 
-  	_validateValue(value: any) {
+  	validateValue(value: any) {
 
 		let validator = (value: any) => true;
     
@@ -53,12 +58,19 @@ export default class Pin extends EventEmitter {
 			case PinTypes.EVENT:
 				validator = (value) => value instanceof EventEmitter;
 				break;
-			case PinTypes.ARRAY:
-				validator = _.isArray;
-				break;
 		}
 
-		return validator(value);
+		if (this.enumerableValue) {
+
+			if (_.isArray(value) && value.length) {
+				return _.every(value, validator);
+			} else {
+				return false;
+			}
+
+		} else {
+			return validator(value);
+		}
 	}
 
 	get value() {
@@ -66,10 +78,9 @@ export default class Pin extends EventEmitter {
 	}
 	  
 	set value(value: any) {
-		if (this._validateValue(value)) {
+		if (this.validateValue(value)) {
 			this._value = value;
 			this.emit('pinValueUpdate', value);
-			console.log('Pin Value Updated', this, value);
 		}
 	}
 }

@@ -25,9 +25,15 @@ export default class Connection extends EventEmitter {
         this.fromPin = props.fromPin;
         this.toPin = props.toPin;
 
-        this._setupEventListener();
+        if (this.toPin.validateValue(this.fromPin.value)) {
+            this.toPin.value = this.fromPin.value;
 
-        Store.addConnection(this);
+            this._setupEventListener();
+    
+            Store.addConnection(this);
+        } else {
+            console.warn(`[ILLEGAL CONNECTION]: Target Pin expects type: ${this.toPin.valueType}`);
+        }
     }
 
     _updateToPinValue(value: any) {

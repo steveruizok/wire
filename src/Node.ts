@@ -31,7 +31,7 @@ export default class Node extends EventEmitter {
 	}
 
 	_initializePins(inputPins: Wire.Node.PinProps[], outputPins: Wire.Node.PinProps[]) {
-		this.inputPins = inputPins.map(p => new Pin(p, this));
+		this.inputPins = inputPins.map(p => new Pin(p, this, true));
 		this.outputPins = outputPins.map(p => new Pin(p, this));
 	}
 }

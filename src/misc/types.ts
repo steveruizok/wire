@@ -9,6 +9,7 @@ export namespace Wire {
 			value: string | number | boolean;
 			label: string;
 			valueType?: string;
+			enumerableValue?: boolean;
 		}
 
 		export interface NodeProps {

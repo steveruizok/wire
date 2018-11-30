@@ -4,6 +4,5 @@ export default {
 	BOOLEAN: 'Boolean',
 	OBJECT: 'Object',
 	FUNCTION: 'Function',
-	EVENT: 'Event',
-	ARRAY: 'Array'
+	EVENT: 'Event'
 }
