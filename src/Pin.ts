@@ -14,10 +14,11 @@ export default class Pin extends EventEmitter {
 	isInputPin: boolean;
 	_value: any;
 	node: Node;
+	index: number;
 	valueType?: string;
 	enumerableValue?: boolean;
 
-  	constructor(props: Wire.Node.PinProps, node: Node, isInputPin: boolean = false) {
+  	constructor(props: Wire.Node.PinProps, node: Node, isInputPin: boolean = false, index: number) {
 		super();
 		
 		props = _.defaults(props, {
@@ -34,6 +35,7 @@ export default class Pin extends EventEmitter {
 		this.valueType = props.valueType;
 		this.enumerableValue = props.enumerableValue;
 		this.isInputPin = isInputPin;
+		this.index = index;
   	}
 
   	validateValue(value: any) {

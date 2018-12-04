@@ -13,6 +13,10 @@ export default class Node extends EventEmitter {
 	label: string;
 	inputPins: Pin[];
 	outputPins: Pin[];
+	position: {
+		x: number;
+		y: number;
+	};
 
 	constructor(props: Wire.Node.NodeProps) {
 		super();
@@ -24,6 +28,7 @@ export default class Node extends EventEmitter {
 
 		this.id = props.id;
 		this.label = props.label;
+		this.position = props.position;
 
 		this._initializePins(props.inputPins, props.outputPins);
 
@@ -31,7 +36,7 @@ export default class Node extends EventEmitter {
 	}
 
 	_initializePins(inputPins: Wire.Node.PinProps[], outputPins: Wire.Node.PinProps[]) {
-		this.inputPins = inputPins.map(p => new Pin(p, this, true));
-		this.outputPins = outputPins.map(p => new Pin(p, this));
+		this.inputPins = inputPins.map((p, i) => new Pin(p, this, true, i));
+		this.outputPins = outputPins.map((p, i) => new Pin(p, this, false, i));
 	}
 }

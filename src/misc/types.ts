@@ -17,6 +17,10 @@ export namespace Wire {
 			label: string;
 			inputPins: PinProps[];
 			outputPins: PinProps[];
+			position: {
+				x: number;
+				y: number;
+			}
 		}
 	}
 
