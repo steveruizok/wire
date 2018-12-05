@@ -19,7 +19,7 @@ export default class Pin extends EventEmitter {
 	index: number;
 	valueType?: string;
 	enumerableValue?: boolean;
-	connections: string[];
+	connections: Connection[];
 
   	constructor(props: Wire.Node.PinProps, node: Node, isInputPin: boolean = false, index: number) {
 		super();

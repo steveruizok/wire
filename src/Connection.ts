@@ -32,8 +32,8 @@ export default class Connection extends EventEmitter {
     
                 this._setupEventListener();
     
-                this.fromPin.connections.push(this.id);
-                this.toPin.connections.push(this.id);
+                this.fromPin.connections.push(this);
+                this.toPin.connections.push(this);
         
                 Store.addConnection(this);
             } else {

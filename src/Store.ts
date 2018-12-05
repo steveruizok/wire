@@ -21,6 +21,9 @@ export class Store extends EventEmitter {
 
         this.nodes.splice(nodeIndex, 1);
 
+        node.inputPins.forEach(p => p.connections.forEach(c => this.removeConnection(c)));
+        node.outputPins.forEach(p => p.connections.forEach(c => this.removeConnection(c)));
+
         this.emit('nodes:updated', this.nodes);
     }
 
@@ -40,10 +43,10 @@ export class Store extends EventEmitter {
         this.connections.splice(connectionIndex, 1);
 
 
-        const connectionIndexInFromPin = connection.fromPin.connections.indexOf(connection.id);
+        const connectionIndexInFromPin = connection.fromPin.connections.indexOf(connection);
         connection.fromPin.connections.splice(connectionIndexInFromPin, 1);
 
-        const connectionIndexInToPin = connection.toPin.connections.indexOf(connection.id);
+        const connectionIndexInToPin = connection.toPin.connections.indexOf(connection);
         connection.toPin.connections.splice(connectionIndexInToPin, 1);
 
 
