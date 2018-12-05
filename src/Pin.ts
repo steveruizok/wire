@@ -4,6 +4,7 @@ import {v4 as uuid} from 'uuid';
 
 import PinTypes from './misc/PinTypes';
 import Node from './Node';
+import Connection from './Connection';
 
 import {Wire} from './misc/types';
 
@@ -13,10 +14,12 @@ export default class Pin extends EventEmitter {
 	label: string;
 	isInputPin: boolean;
 	_value: any;
+	defaultValue: any;
 	node: Node;
 	index: number;
 	valueType?: string;
 	enumerableValue?: boolean;
+	connections: string[];
 
   	constructor(props: Wire.Node.PinProps, node: Node, isInputPin: boolean = false, index: number) {
 		super();
@@ -31,11 +34,13 @@ export default class Pin extends EventEmitter {
 		this.id = props.id;
 		this.label = props.label;
 		this.value = props.value;
+		this.defaultValue = props.value;
 		this.node = node;
 		this.valueType = props.valueType;
 		this.enumerableValue = props.enumerableValue;
 		this.isInputPin = isInputPin;
 		this.index = index;
+		this.connections = [];
   	}
 
   	validateValue(value: any) {
@@ -85,5 +90,9 @@ export default class Pin extends EventEmitter {
 			this._value = value;
 			this.emit('value:update', value);
 		}
+	}
+
+	get connected() {
+		return !!this.connections.length;
 	}
 }

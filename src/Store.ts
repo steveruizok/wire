@@ -34,8 +34,18 @@ export class Store extends EventEmitter {
         const connectionIndex = this.connections.indexOf(connection);
         if (connectionIndex === -1) return;
 
+        connection.toPin.value = connection.toPin.defaultValue;
+
         connection.removeEventListener();
         this.connections.splice(connectionIndex, 1);
+
+
+        const connectionIndexInFromPin = connection.fromPin.connections.indexOf(connection.id);
+        connection.fromPin.connections.splice(connectionIndexInFromPin, 1);
+
+        const connectionIndexInToPin = connection.toPin.connections.indexOf(connection.id);
+        connection.toPin.connections.splice(connectionIndexInToPin, 1);
+
 
         this.emit('connections:updated', this.connections);
     }
