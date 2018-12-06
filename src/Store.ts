@@ -30,6 +30,8 @@ export class Store extends EventEmitter {
     addConnection(connection: Connection) {
         this.connections.push(connection);
 
+        connection.toPin.node.onConnectionAdded ? connection.toPin.node.onConnectionAdded() : null;
+
         this.emit('connections:updated', this.connections);
     }
 
@@ -49,6 +51,7 @@ export class Store extends EventEmitter {
         const connectionIndexInToPin = connection.toPin.connections.indexOf(connection);
         connection.toPin.connections.splice(connectionIndexInToPin, 1);
 
+        connection.toPin.node.onConnectionRemoved ? connection.toPin.node.onConnectionRemoved() : null;
 
         this.emit('connections:updated', this.connections);
     }

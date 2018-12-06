@@ -17,6 +17,7 @@ export default class Node extends EventEmitter {
 		x: number;
 		y: number;
 	};
+    compute?(inputPins: Pin[], outputPins: Pin[]): void;
 
 	constructor(props: Wire.Node.NodeProps) {
 		super();
@@ -39,4 +40,12 @@ export default class Node extends EventEmitter {
 		this.inputPins = inputPins.map((p, i) => new Pin(p, this, true, i));
 		this.outputPins = outputPins.map((p, i) => new Pin(p, this, false, i));
 	}
+
+    onConnectionAdded() {
+        this.compute ? this.compute(this.inputPins, this.outputPins) : null;
+    }
+
+    onConnectionRemoved() {
+        this.compute ? this.compute(this.inputPins, this.outputPins) : null;
+    }
 }
