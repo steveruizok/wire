@@ -32,6 +32,8 @@ export default class Node extends EventEmitter {
 		this.position = props.position;
 
 		this._initializePins(props.inputPins, props.outputPins);
+		
+        this.compute ? this.compute(this.inputPins, this.outputPins) : null;
 
 		Store.addNode(this);
 	}
