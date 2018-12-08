@@ -4,7 +4,6 @@
 	"description": "A visual scripting framework",
 	"main": "lib/wire.js",
 	"scripts": {
-		"prepublish": "npm run build",
 		"build": "webpack"
 	},
 	"repository": {
