@@ -20,7 +20,8 @@ export namespace Wire {
 			position: {
 				x: number;
 				y: number;
-			}
+			};
+			extra?: {};
 		}
 	}
 
