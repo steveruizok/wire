@@ -31,11 +31,11 @@ export default class Pin extends EventEmitter {
 			enumerableValue: false
 		});
 
+		this.node = node;
 		this.id = props.id;
 		this.label = props.label;
 		this.value = props.value;
 		this.defaultValue = props.value;
-		this.node = node;
 		this.valueType = props.valueType;
 		this.enumerableValue = props.enumerableValue;
 		this.isInputPin = isInputPin;
@@ -88,7 +88,11 @@ export default class Pin extends EventEmitter {
 	set value(value: any) {
 		if (this.validateValue(value)) {
 			this._value = value;
-			this.emit('value:updated', value);
+			this.emit('update', value);
+
+			if (this.node.initialized && this.isInputPin) {
+				this.node.compute ? this.node.compute(this.node.inputPins, this.node.outputPins) : null;
+			}
 		}
 	}
 

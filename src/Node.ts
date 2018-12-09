@@ -17,6 +17,7 @@ export default class Node extends EventEmitter {
 		x: number;
 		y: number;
 	};
+	initialized: boolean = false;
     compute?(inputPins: Pin[], outputPins: Pin[]): void;
 
 	constructor(props: Wire.Node.NodeProps) {
@@ -36,6 +37,8 @@ export default class Node extends EventEmitter {
         this.compute ? this.compute(this.inputPins, this.outputPins) : null;
 
 		Store.addNode(this);
+
+		this.initialized = true;
 	}
 
 	_initializePins(inputPins: Wire.Node.PinProps[], outputPins: Wire.Node.PinProps[]) {

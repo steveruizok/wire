@@ -12,7 +12,7 @@ export class Store extends EventEmitter {
     addNode(node: Node) {
         this.nodes.push(node);
 
-        this.emit('nodes:updated', this.nodes);
+        this.emit('nodes:update', this.nodes);
     }
 
     removeNode(node: Node) {
@@ -32,11 +32,11 @@ export class Store extends EventEmitter {
             const connectionIndexInFromPin = c.fromPin.connections.indexOf(c);
             c.fromPin.connections.splice(connectionIndexInFromPin, 1);
 
-            c.toPin.node.onConnectionRemoved ? c.toPin.node.onConnectionRemoved() : null;
+            c.fromPin.node.onConnectionRemoved ? c.toPin.node.onConnectionRemoved() : null;
 
             this.connections.splice(connectionIndex, 1);
 
-            this.emit('connections:updated', this.connections);
+            this.emit('connections:update', this.connections);
         }));
 
         node.outputPins.forEach(p => p.connections.forEach(c => {
@@ -54,10 +54,10 @@ export class Store extends EventEmitter {
 
             this.connections.splice(connectionIndex, 1);
 
-            this.emit('connections:updated', this.connections);
+            this.emit('connections:update', this.connections);
         }));
 
-        this.emit('nodes:updated', this.nodes);
+        this.emit('nodes:update', this.nodes);
     }
 
     addConnection(connection: Connection) {
@@ -65,7 +65,7 @@ export class Store extends EventEmitter {
 
         connection.toPin.node.onConnectionAdded ? connection.toPin.node.onConnectionAdded() : null;
 
-        this.emit('connections:updated', this.connections);
+        this.emit('connections:update', this.connections);
     }
 
     removeConnection(connection: Connection) {
@@ -83,11 +83,12 @@ export class Store extends EventEmitter {
         const connectionIndexInToPin = connection.toPin.connections.indexOf(connection);
         connection.toPin.connections.splice(connectionIndexInToPin, 1);
 
+        connection.fromPin.node.onConnectionRemoved ? connection.toPin.node.onConnectionRemoved() : null;
         connection.toPin.node.onConnectionRemoved ? connection.toPin.node.onConnectionRemoved() : null;
-
+        
         this.connections.splice(connectionIndex, 1);
 
-        this.emit('connections:updated', this.connections);
+        this.emit('connections:update', this.connections);
     }
 }
 

@@ -50,10 +50,10 @@ export default class Connection extends EventEmitter {
     }
     
     _setupEventListener() {
-        this.fromPin.on('value:updated', this._updateToPinValue);
+        this.fromPin.on('update', this._updateToPinValue);
     }
 
     removeEventListener() {
-        this.fromPin.removeListener('value:updated', this._updateToPinValue);
+        this.fromPin.removeListener('update', this._updateToPinValue);
     }
 }

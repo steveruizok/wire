@@ -10,6 +10,7 @@ export default class Node extends EventEmitter {
         x: number;
         y: number;
     };
+    initialized: boolean;
     compute?(inputPins: Pin[], outputPins: Pin[]): void;
     constructor(props: Wire.Node.NodeProps);
     _initializePins(inputPins: Wire.Node.PinProps[], outputPins: Wire.Node.PinProps[]): void;
