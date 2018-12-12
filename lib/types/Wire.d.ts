@@ -6,5 +6,13 @@ declare const _default: {
     Pin: typeof Pin;
     Connection: typeof Connection;
     Store: import("./Store").Store;
+    ValueTypes: {
+        STRING: string;
+        NUMBER: string;
+        BOOLEAN: string;
+        OBJECT: string;
+        FUNCTION: string;
+        EVENT: string;
+    };
 };
 export default _default;
