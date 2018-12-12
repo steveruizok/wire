@@ -2,7 +2,7 @@ import * as EventEmitter from 'eventemitter3';
 import * as _ from 'lodash';
 import {v4 as uuid} from 'uuid';
 
-import PinTypes from './misc/PinTypes';
+import ValueTypes from './misc/ValueTypes';
 import Node from './Node';
 import Connection from './Connection';
 
@@ -48,22 +48,22 @@ export default class Pin extends EventEmitter {
 		let validator = (value: any) => true;
     
 		switch(this.valueType) {
-			case PinTypes.STRING:
+			case ValueTypes.STRING:
 				validator = _.isString;
 				break;
-			case PinTypes.NUMBER:
+			case ValueTypes.NUMBER:
 				validator = _.isNumber;
 				break;
-			case PinTypes.BOOLEAN:
+			case ValueTypes.BOOLEAN:
 				validator = _.isBoolean;
 				break;
-			case PinTypes.OBJECT:
+			case ValueTypes.OBJECT:
 				validator = _.isObject;
 				break;
-			case PinTypes.FUNCTION:
+			case ValueTypes.FUNCTION:
 				validator = _.isFunction;
 				break;
-			case PinTypes.EVENT:
+			case ValueTypes.EVENT:
 				validator = (value) => value instanceof EventEmitter;
 				break;
 		}
