@@ -18,6 +18,7 @@ export namespace Wire {
 			category: string;
 			inputPins: PinProps[];
 			outputPins: PinProps[];
+			repeatableInputs: boolean;
 			position: {
 				x: number;
 				y: number;

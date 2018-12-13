@@ -19,6 +19,7 @@ export default class Node extends EventEmitter {
 		y: number;
 	};
 	initialized: boolean = false;
+	repeatableInputs: boolean = false;
 	extra?: {};
 	compute?(inputPins: Pin[], outputPins: Pin[]): void;
 
@@ -35,6 +36,7 @@ export default class Node extends EventEmitter {
 		this.name = props.name;
 		this.category = props.category;
 		this.position = props.position;
+		this.repeatableInputs = props.repeatableInputs;
 		this.extra = props.extra;
 
 		this._initializePins(props.inputPins, props.outputPins);
