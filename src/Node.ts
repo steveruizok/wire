@@ -20,14 +20,14 @@ export default class Node extends EventEmitter {
 	};
 	initialized: boolean = false;
 	extra?: {};
-    compute?(inputPins: Pin[], outputPins: Pin[]): void;
+	compute?(inputPins: Pin[], outputPins: Pin[]): void;
 
 	constructor(props: Wire.Node.NodeProps) {
 		super();
 
 		props = _.defaults(props, {
 			id: uuid(),
-			name: this.constructor.name || 'Untitled',
+			name: 'Untitled',
 			category: 'Uncategorized'
 		});
 
