@@ -10,7 +10,7 @@ import {Wire} from './misc/types';
 export default class Node extends EventEmitter {
 
 	id: string;
-	label: string;
+	name: string;
 	inputPins: Pin[];
 	outputPins: Pin[];
 	position: {
@@ -26,11 +26,11 @@ export default class Node extends EventEmitter {
 
 		props = _.defaults(props, {
 			id: uuid(),
-			label: 'Untitled'
+			name: this.constructor.name || 'Untitled'
 		});
 
 		this.id = props.id;
-		this.label = props.label;
+		this.name = props.name;
 		this.position = props.position;
 		this.extra = props.extra;
 

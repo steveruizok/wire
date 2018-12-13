@@ -3,7 +3,7 @@ import Pin from './Pin';
 import { Wire } from './misc/types';
 export default class Node extends EventEmitter {
     id: string;
-    label: string;
+    name: string;
     inputPins: Pin[];
     outputPins: Pin[];
     position: {
