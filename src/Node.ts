@@ -19,7 +19,7 @@ export default class Node extends EventEmitter {
 		y: number;
 	};
 	initialized: boolean = false;
-	repeatableInputs: boolean = false;
+	repeatableInputPin?: Wire.Node.PinProps;
 	extra?: {};
 	compute?(inputPins: Pin[], outputPins: Pin[]): void;
 
@@ -36,7 +36,7 @@ export default class Node extends EventEmitter {
 		this.name = props.name;
 		this.category = props.category;
 		this.position = props.position;
-		this.repeatableInputs = props.repeatableInputs;
+		this.repeatableInputPin = props.repeatableInputPin;
 		this.extra = props.extra;
 
 		this._initializePins(props.inputPins, props.outputPins);
@@ -51,6 +51,12 @@ export default class Node extends EventEmitter {
 	_initializePins(inputPins: Wire.Node.PinProps[], outputPins: Wire.Node.PinProps[]) {
 		this.inputPins = inputPins.map((p, i) => new Pin(p, this, true, i));
 		this.outputPins = outputPins.map((p, i) => new Pin(p, this, false, i));
+	}
+
+	addInputPin() {
+		if (this.repeatableInputPin) {
+			this.inputPins.push(new Pin(this.repeatableInputPin, this, true, this.inputPins.length - 1));
+		}
 	}
 
     onConnectionAdded() {
