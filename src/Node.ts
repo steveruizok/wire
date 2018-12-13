@@ -53,7 +53,7 @@ export default class Node extends EventEmitter {
 		this.outputPins = outputPins.map((p, i) => new Pin(p, this, false, i));
 	}
 
-	addInputPin() {
+	addRepeatableInputPin() {
 		if (this.repeatableInputPin) {
 			this.inputPins.push(new Pin(this.repeatableInputPin, this, true, this.inputPins.length - 1));
 		}

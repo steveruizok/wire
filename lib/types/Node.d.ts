@@ -12,10 +12,12 @@ export default class Node extends EventEmitter {
         y: number;
     };
     initialized: boolean;
+    repeatableInputPin?: Wire.Node.PinProps;
     extra?: {};
     compute?(inputPins: Pin[], outputPins: Pin[]): void;
     constructor(props: Wire.Node.NodeProps);
     _initializePins(inputPins: Wire.Node.PinProps[], outputPins: Wire.Node.PinProps[]): void;
+    addRepeatableInputPin(): void;
     onConnectionAdded(): void;
     onConnectionRemoved(): void;
 }

@@ -27,7 +27,6 @@ export default class Pin extends EventEmitter {
 		props = _.defaults(props, {
 			id: uuid(),
 			label: 'Untitled',
-			valueIsArray: false,
 			enumerableValue: false
 		});
 
