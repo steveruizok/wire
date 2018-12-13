@@ -15,6 +15,7 @@ export namespace Wire {
 		export interface NodeProps {
 			id: string;
 			name: string;
+			category: string;
 			inputPins: PinProps[];
 			outputPins: PinProps[];
 			position: {

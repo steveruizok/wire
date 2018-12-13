@@ -11,6 +11,7 @@ export default class Node extends EventEmitter {
 
 	id: string;
 	name: string;
+	category: string;
 	inputPins: Pin[];
 	outputPins: Pin[];
 	position: {
@@ -26,11 +27,13 @@ export default class Node extends EventEmitter {
 
 		props = _.defaults(props, {
 			id: uuid(),
-			name: this.constructor.name || 'Untitled'
+			name: this.constructor.name || 'Untitled',
+			category: 'Uncategorized'
 		});
 
 		this.id = props.id;
 		this.name = props.name;
+		this.category = props.category;
 		this.position = props.position;
 		this.extra = props.extra;
 

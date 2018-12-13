@@ -4,6 +4,7 @@ import { Wire } from './misc/types';
 export default class Node extends EventEmitter {
     id: string;
     name: string;
+    category: string;
     inputPins: Pin[];
     outputPins: Pin[];
     position: {
