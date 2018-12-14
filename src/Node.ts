@@ -55,7 +55,8 @@ export default class Node extends EventEmitter {
 
 	addRepeatableInputPin() {
 		if (this.repeatableInputPin) {
-			this.inputPins.push(new Pin(this.repeatableInputPin, this, true, this.inputPins.length - 1));
+			this.inputPins.push(new Pin(this.repeatableInputPin, this, true, this.inputPins.length));
+			this.emit('update', this);
 		}
 	}
 
