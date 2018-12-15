@@ -51,7 +51,7 @@ export default class Pin extends EventEmitter {
 				validator = _.isString;
 				break;
 			case ValueTypes.NUMBER:
-				validator = _.isNumber;
+				validator = (value) => !isNaN(value * 1);
 				break;
 			case ValueTypes.BOOLEAN:
 				validator = _.isBoolean;
