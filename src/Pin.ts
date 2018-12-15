@@ -33,8 +33,8 @@ export default class Pin extends EventEmitter {
 		this.node = node;
 		this.id = props.id;
 		this.label = props.label;
-		this.value = props.value;
-		this.defaultValue = props.defaultValue || props.value;
+		this.value = props.value || props.defaultValue;
+		this.defaultValue = props.defaultValue;
 		this.valueType = props.valueType;
 		this.enumerableValue = props.enumerableValue;
 		this.isInputPin = isInputPin;
