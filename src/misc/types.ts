@@ -7,6 +7,7 @@ export namespace Wire {
 		export interface PinProps {
 			id: string;
 			value: string | number | boolean;
+			defaultValue: string | number | boolean;
 			label: string;
 			valueType?: string;
 			enumerableValue?: boolean;

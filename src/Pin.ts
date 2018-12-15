@@ -34,7 +34,7 @@ export default class Pin extends EventEmitter {
 		this.id = props.id;
 		this.label = props.label;
 		this.value = props.value;
-		this.defaultValue = props.value;
+		this.defaultValue = props.defaultValue || props.value;
 		this.valueType = props.valueType;
 		this.enumerableValue = props.enumerableValue;
 		this.isInputPin = isInputPin;
