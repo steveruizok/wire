@@ -58,6 +58,7 @@ export default class Node extends EventEmitter {
 		return JSON.stringify({
 			id: this.id,
 			name: this.name,
+			nodeType: this.constructor.name,
 			props: this.props,
 			inputPins: ip,
 			outputPins: op
