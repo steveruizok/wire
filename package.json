@@ -4,7 +4,7 @@
 	"description": "A visual scripting framework",
 	"main": "lib/wire.js",
 	"scripts": {
-		"build": "webpack"
+		"build": "tsc"
 	},
 	"repository": {
 		"type": "git",
@@ -24,10 +24,6 @@
 		"lodash": "^4.17.11",
 		"typescript": "^3.1.6",
 		"uglifyjs-webpack-plugin": "^2.0.1",
-		"uuid": "^3.3.2",
-		"webpack": "^4.26.1"
-	},
-	"devDependencies": {
-		"webpack-cli": "^3.1.2"
+		"uuid": "^3.3.2"
 	}
 }

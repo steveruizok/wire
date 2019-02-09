@@ -8,7 +8,6 @@ import Store from './Store';
 import {Wire} from './misc/types';
 
 export default class Node extends EventEmitter {
-
 	id: string;
 	name: string;
 	category: string;
@@ -20,9 +19,8 @@ export default class Node extends EventEmitter {
 	};
 	initialized: boolean = false;
 	repeatableInputPin?: Wire.Node.PinProps;
-	props: Wire.Node.NodeProps;
-	extra?: {};
-	compute?(inputPins: Pin[], outputPins: Pin[]): void;
+	data: any;
+	compute?(): void;
 
 	constructor(props: Wire.Node.NodeProps) {
 		super();
@@ -38,31 +36,13 @@ export default class Node extends EventEmitter {
 		this.category = props.category;
 		this.position = props.position;
 		this.repeatableInputPin = props.repeatableInputPin;
-		this.extra = props.extra;
+		this.data = props.data;
 
 		this._initializePins(props.inputPins, props.outputPins);
 		
-        this.compute ? this.compute(this.inputPins, this.outputPins) : null;
+        this.compute ? this.compute() : null;
 
 		Store.addNode(this);
-
-		this.initialized = true;
-
-		this.props = props;
-	}
-
-	toJSON() {
-		const ip = this.inputPins.map(ip => JSON.parse(ip.toJSON()));
-		const op = this.outputPins.map(op => JSON.parse(op.toJSON()));
-
-		return JSON.stringify({
-			id: this.id,
-			name: this.name,
-			nodeType: this.constructor.name,
-			props: this.props,
-			inputPins: ip,
-			outputPins: op
-		});
 	}
 
 	_initializePins(inputPins: Wire.Node.PinProps[], outputPins: Wire.Node.PinProps[]) {
@@ -78,10 +58,26 @@ export default class Node extends EventEmitter {
 	}
 
     onConnectionAdded() {
-        this.compute ? this.compute(this.inputPins, this.outputPins) : null;
+        this.compute ? this.compute() : null;
     }
 
     onConnectionRemoved() {
-        this.compute ? this.compute(this.inputPins, this.outputPins) : null;
-    }
+        this.compute ? this.compute() : null;
+	}
+	
+	toJSON() {
+		return JSON.stringify({
+			constructor: this.constructor.name,
+			props: {
+				id: this.id,
+				name: this.name,
+				category: this.category,
+				position: this.position,
+				repeatableInputPin: this.repeatableInputPin,
+				data: this.data,
+				inputPins: this.inputPins.map(ip => JSON.parse(ip.toJSON())),
+				outputPins: this.outputPins.map(op => JSON.parse(op.toJSON()))
+			}
+		});
+	}
 }

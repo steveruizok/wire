@@ -28,7 +28,6 @@ export default class Connection extends EventEmitter {
         this.props = props;
 
         if (!this.toPin.connected) {
-
             if (this.toPin.validateValue(this.fromPin.value)) {
                 this.toPin.value = this.fromPin.value;
     
@@ -61,8 +60,11 @@ export default class Connection extends EventEmitter {
 
     toJSON() {
         return JSON.stringify({
+            constructor: this.constructor.name,
             id: this.id,
+            fromNodeId: this.fromPin.node.id,
             fromPinId: this.fromPin.id,
+            toNodeId: this.toPin.node.id,
             toPinId: this.toPin.id
         });
     }

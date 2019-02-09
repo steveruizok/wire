@@ -2,7 +2,6 @@ import Node from '../Node';
 import Pin from '../Pin';
 
 export namespace Wire {
-
 	export namespace Node {
 		export interface PinProps {
 			id: string;
@@ -24,7 +23,7 @@ export namespace Wire {
 				x: number;
 				y: number;
 			};
-			extra?: {};
+			data: any;
 		}
 	}
 

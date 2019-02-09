@@ -1,10 +1,10 @@
 {
   "compilerOptions": {
     "target": "es6",
-    "module": "commonjs",
-    "declaration": true,
+    "module": "amd",
+    "outFile": "./lib/wire.js",
     "noImplicitAny": true,
-    "declarationDir": "lib/types"
+    "moduleResolution": "node"
   },
     "include": [
         "src/**/*"
