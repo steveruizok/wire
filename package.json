@@ -1,21 +1,21 @@
 {
-	"name": "wire",
+	"name": "wiral",
 	"version": "0.0.1",
 	"description": "A visual scripting framework",
-	"main": "lib/wire.js",
+	"main": "lib/wiral.js",
 	"scripts": {
 		"build": "tsc"
 	},
 	"repository": {
 		"type": "git",
-		"url": "git+https://github.com/emilwidlund/wire.git"
+		"url": "git+https://github.com/emilwidlund/wiral.git"
 	},
 	"author": "Emil Widlund",
 	"license": "MIT",
 	"bugs": {
-		"url": "https://github.com/emilwidlund/wire/issues"
+		"url": "https://github.com/emilwidlund/wiral/issues"
 	},
-	"homepage": "https://github.com/emilwidlund/wire#readme",
+	"homepage": "https://github.com/emilwidlund/wiral#readme",
 	"dependencies": {
 		"@types/lodash": "^4.14.118",
 		"@types/uuid": "^3.4.4",
@@ -23,7 +23,6 @@
 		"eventemitter3": "^3.1.0",
 		"lodash": "^4.17.11",
 		"typescript": "^3.1.6",
-		"uglifyjs-webpack-plugin": "^2.0.1",
 		"uuid": "^3.3.2"
 	}
 }

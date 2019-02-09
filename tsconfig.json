@@ -2,7 +2,7 @@
   "compilerOptions": {
     "target": "es6",
     "module": "amd",
-    "outFile": "./lib/wire.js",
+    "outFile": "./lib/wiral.js",
     "noImplicitAny": true,
     "moduleResolution": "node"
   },
