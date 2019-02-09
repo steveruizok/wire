@@ -13,8 +13,10 @@ export default class Pin extends EventEmitter {
     valueType?: string;
     enumerableValue?: boolean;
     connections: Connection[];
+    props: Wire.Node.PinProps;
     constructor(props: Wire.Node.PinProps, node: Node, isInputPin: boolean, index: number);
     validateValue(value: any): boolean;
+    toJSON(): string;
     value: any;
     readonly connected: boolean;
 }

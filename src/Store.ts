@@ -90,6 +90,16 @@ export class Store extends EventEmitter {
 
         this.emit('connections:update', this.connections);
     }
+
+    toJSON() {
+        const nodes = this.nodes.map(n => JSON.parse(n.toJSON()));
+        const connections = this.connections.map(c => JSON.parse(c.toJSON()));
+
+        return JSON.stringify({
+            nodes,
+            connections
+        });
+    }
 }
 
 export default new Store();

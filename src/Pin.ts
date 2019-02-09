@@ -20,6 +20,7 @@ export default class Pin extends EventEmitter {
 	valueType?: string;
 	enumerableValue?: boolean;
 	connections: Connection[];
+	props: Wire.Node.PinProps;
 
   	constructor(props: Wire.Node.PinProps, node: Node, isInputPin: boolean = false, index: number) {
 		super();
@@ -40,6 +41,8 @@ export default class Pin extends EventEmitter {
 		this.isInputPin = isInputPin;
 		this.index = index;
 		this.connections = [];
+
+		this.props = props;
   	}
 
   	validateValue(value: any) {
@@ -78,6 +81,14 @@ export default class Pin extends EventEmitter {
 		} else {
 			return validator(value);
 		}
+	}
+
+	toJSON() {
+		return JSON.stringify({
+			id: this.id,
+			label: this.label,
+			props: this.props
+		});
 	}
 
 	get value() {

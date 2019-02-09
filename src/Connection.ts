@@ -11,6 +11,7 @@ export default class Connection extends EventEmitter {
     id: string;
     fromPin: Pin;
     toPin: Pin;
+    props: Wire.Connection.ConnectionProps;
 
     constructor(props: Wire.Connection.ConnectionProps) {
         super();
@@ -24,6 +25,7 @@ export default class Connection extends EventEmitter {
         this.id = props.id;
         this.fromPin = props.fromPin;
         this.toPin = props.toPin;
+        this.props = props;
 
         if (!this.toPin.connected) {
 
@@ -55,5 +57,13 @@ export default class Connection extends EventEmitter {
 
     removeEventListener() {
         this.fromPin.removeListener('update', this._updateToPinValue);
+    }
+
+    toJSON() {
+        return JSON.stringify({
+            id: this.id,
+            fromPinId: this.fromPin.id,
+            toPinId: this.toPin.id
+        });
     }
 }

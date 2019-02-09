@@ -8,6 +8,7 @@ export declare class Store extends EventEmitter {
     removeNode(node: Node): void;
     addConnection(connection: Connection): void;
     removeConnection(connection: Connection): void;
+    toJSON(): string;
 }
 declare const _default: Store;
 export default _default;

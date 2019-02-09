@@ -20,6 +20,7 @@ export default class Node extends EventEmitter {
 	};
 	initialized: boolean = false;
 	repeatableInputPin?: Wire.Node.PinProps;
+	props: Wire.Node.NodeProps;
 	extra?: {};
 	compute?(inputPins: Pin[], outputPins: Pin[]): void;
 
@@ -46,6 +47,21 @@ export default class Node extends EventEmitter {
 		Store.addNode(this);
 
 		this.initialized = true;
+
+		this.props = props;
+	}
+
+	toJSON() {
+		const ip = this.inputPins.map(ip => JSON.parse(ip.toJSON()));
+		const op = this.outputPins.map(op => JSON.parse(op.toJSON()));
+
+		return JSON.stringify({
+			id: this.id,
+			name: this.name,
+			props: this.props,
+			inputPins: ip,
+			outputPins: op
+		});
 	}
 
 	_initializePins(inputPins: Wire.Node.PinProps[], outputPins: Wire.Node.PinProps[]) {
