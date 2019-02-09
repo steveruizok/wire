@@ -4,7 +4,7 @@ import Connection from './Connection';
 import Store from './Store';
 import ValueTypes from './misc/ValueTypes';
 
-export default {
+module.exports = {
 	Node: Node,
 	Pin: Pin,
 	Connection: Connection,

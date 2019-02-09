@@ -1,6 +1,6 @@
 {
 	"name": "wiral",
-	"version": "0.0.4",
+	"version": "0.0.41",
 	"description": "A visual scripting framework",
 	"main": "lib/wiral.js",
 	"scripts": {
