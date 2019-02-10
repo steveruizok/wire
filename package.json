@@ -2,21 +2,21 @@
 	"name": "@wireflow/core",
 	"version": "0.0.41",
 	"description": "A visual scripting framework",
-	"main": "lib/wiral.js",
+	"main": "lib/index.js",
 	"scripts": {
 		"build": "tsc",
 		"prepare": "npm run build"
 	},
 	"repository": {
 		"type": "git",
-		"url": "git+https://github.com/emilwidlund/wiral.git"
+		"url": "git+https://github.com/emilwidlund/wireflow-core.git"
 	},
 	"author": "Emil Widlund",
 	"license": "MIT",
 	"bugs": {
-		"url": "https://github.com/emilwidlund/wiral/issues"
+		"url": "https://github.com/emilwidlund/wireflow-core/issues"
 	},
-	"homepage": "https://github.com/emilwidlund/wiral#readme",
+	"homepage": "https://github.com/emilwidlund/wireflow-core#readme",
 	"dependencies": {
 		"@types/lodash": "^4.14.118",
 		"@types/uuid": "^3.4.4",
