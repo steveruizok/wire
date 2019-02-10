@@ -1,5 +1,5 @@
 {
-	"name": "wiral",
+	"name": "@wireflow/core",
 	"version": "0.0.41",
 	"description": "A visual scripting framework",
 	"main": "lib/wiral.js",
