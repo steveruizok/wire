@@ -13,10 +13,6 @@ export default class Node extends EventEmitter {
 	category: string;
 	inputPins: Pin[];
 	outputPins: Pin[];
-	position: {
-		x: number;
-		y: number;
-	};
 	initialized: boolean = false;
 	repeatableInputPin?: Wire.Node.PinProps;
 	data: any;
@@ -34,7 +30,6 @@ export default class Node extends EventEmitter {
 		this.id = props.id;
 		this.name = props.name;
 		this.category = props.category;
-		this.position = props.position;
 		this.repeatableInputPin = props.repeatableInputPin;
 		this.data = props.data;
 
@@ -72,7 +67,6 @@ export default class Node extends EventEmitter {
 				id: this.id,
 				name: this.name,
 				category: this.category,
-				position: this.position,
 				repeatableInputPin: this.repeatableInputPin,
 				data: this.data,
 				inputPins: this.inputPins.map(ip => JSON.parse(ip.toJSON())),
