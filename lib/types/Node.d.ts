@@ -7,10 +7,6 @@ export default class Node extends EventEmitter {
     category: string;
     inputPins: Pin[];
     outputPins: Pin[];
-    position: {
-        x: number;
-        y: number;
-    };
     initialized: boolean;
     repeatableInputPin?: Wire.Node.PinProps;
     data: any;
