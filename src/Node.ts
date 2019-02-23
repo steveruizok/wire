@@ -9,7 +9,7 @@ import {Wire} from './misc/types';
 
 export default class Node extends EventEmitter {
 	id: string;
-	name: string;
+	label: string;
 	category: string;
 	inputPins: Pin[];
 	outputPins: Pin[];
@@ -28,7 +28,7 @@ export default class Node extends EventEmitter {
 		});
 
 		this.id = props.id;
-		this.name = props.name;
+		this.label = props.label;
 		this.category = props.category;
 		this.repeatableInputPin = props.repeatableInputPin;
 		this.data = props.data;
@@ -65,7 +65,7 @@ export default class Node extends EventEmitter {
 			constructor: this.constructor.name,
 			props: {
 				id: this.id,
-				name: this.name,
+				label: this.label,
 				category: this.category,
 				repeatableInputPin: this.repeatableInputPin,
 				data: this.data,
