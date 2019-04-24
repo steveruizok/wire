@@ -1,111 +1,117 @@
-import * as EventEmitter from 'eventemitter3';
-import * as _ from 'lodash';
+import * as EventEmitter from 'eventemitter3'
+import * as _ from 'lodash'
 
-import Node from './Node';
-import Connection from './Connection';
+import Node from './Node'
+import Connection from './Connection'
 
 export class Store extends EventEmitter {
-    connections: Map<string, Connection> = new Map();
-    nodes: Map<string, Node> = new Map();
+	connections: Map<string, Connection> = new Map()
+	nodes: Map<string, Node> = new Map()
 
-    addNode(node: Node) {
-        this.nodes.set(node.id, node);
-        node.initialized = true;
+	addNode(node: Node) {
+		this.nodes.set(node.id, node)
+		node.initialized = true
 
-        this.emit('nodes:update', this.nodes);
-    }
+		this.emit('nodes:update', this.nodes)
+	}
 
-    removeNode(node: Node) {
-        if (!this.nodes.has(node.id)) return;
+	removeNode(node: Node) {
+		if (!this.nodes.has(node.id)) return
 
-        const nodeDeleted = this.nodes.delete(node.id);
+		const nodeDeleted = this.nodes.delete(node.id)
 
-        if (nodeDeleted) {
+		if (nodeDeleted) {
+			node.inputPins.forEach((p) =>
+				p.connections.forEach((c) => {
+					// Remove event listener on connection
+					c.removeEventListener()
 
-            node.inputPins.forEach(p => p.connections.forEach(c => {
-                // Remove event listener on connection
-                c.removeEventListener();
-    
-                // Remove connection from fromPin connections
-                const connectionIndexInFromPin = c.fromPin.connections.indexOf(c);
-                c.fromPin.connections.splice(connectionIndexInFromPin, 1);
-    
-                // Run onConnectionRemoved on fromPin node
-                c.fromPin.node.onConnectionRemoved ? c.fromPin.node.onConnectionRemoved() : null;
-    
-                // Delete connection from connection collection
-                const connectionDeleted = this.connections.delete(c.id);
-    
-                this.emit('connections:update', this.connections);
-            }));
-    
-            node.outputPins.forEach(p => p.connections.forEach(c => {
-                // Reset toPin value to its default value
-                c.toPin.value = c.toPin.defaultValue;
-        
-                // Remove event listener on connection
-                c.removeEventListener();
-    
-                // Remove connection from toPin connections
-                const connectionIndexInToPin = c.toPin.connections.indexOf(c);
-                c.toPin.connections.splice(connectionIndexInToPin, 1);
-    
-                // Run onConnectionRemoved on toPin node
-                c.toPin.node.onConnectionRemoved ? c.toPin.node.onConnectionRemoved() : null;
-    
-                // Delete connection from connection collection
-                const connectionDeleted = this.connections.delete(c.id);
-    
-                this.emit('connections:update', this.connections);
-            }));
-    
-            this.emit('nodes:update', this.nodes);
-        }
-    }
+					// Remove connection from fromPin connections
+					_.pull(c.fromPin.connections, c)
 
-    addConnection(connection: Connection) {
-        this.connections.set(connection.id, connection);
+					// Run onConnectionRemoved on fromPin node
+					const { onConnectionRemoved } = c.fromPin.node
+					_.isFunction(onConnectionRemoved) && onConnectionRemoved()
 
-        connection.fromPin.node.onConnectionAdded ? connection.fromPin.node.onConnectionAdded() : null;
-        connection.toPin.node.onConnectionAdded ? connection.toPin.node.onConnectionAdded() : null;
+					// Delete connection from connection collection
+					const connectionDeleted = this.connections.delete(c.id)
 
-        this.emit('connections:update', this.connections);
-    }
+					this.emit('connections:update', this.connections)
+				})
+			)
 
-    removeConnection(connection: Connection) {
-        // Reset toPin value to its default value
-        connection.toPin.value = connection.toPin.defaultValue;
+			node.outputPins.forEach((p) =>
+				p.connections.forEach((c) => {
+					// Reset toPin value to its default value
+					c.toPin.value = c.toPin.defaultValue
 
-        // Remove event listener on connection
-        connection.removeEventListener();
+					// Remove event listener on connection
+					c.removeEventListener()
 
-        // Remove connection from fromPin
-        const connectionIndexInFromPin = connection.fromPin.connections.indexOf(connection);
-        connection.fromPin.connections.splice(connectionIndexInFromPin, 1);
+					// Remove connection from toPin connections
+					_.pull(c.toPin.connections, c)
 
-        // Remove connection from toPin
-        const connectionIndexInToPin = connection.toPin.connections.indexOf(connection);
-        connection.toPin.connections.splice(connectionIndexInToPin, 1);
+					// Run onConnectionRemoved on toPin node
+					const { onConnectionRemoved } = c.toPin.node
+					_.isFunction(onConnectionRemoved) && onConnectionRemoved()
 
-        // Run onConncetionRemoved on fromPin node and toPin node
-        connection.fromPin.node.onConnectionRemoved ? connection.fromPin.node.onConnectionRemoved() : null;
-        connection.toPin.node.onConnectionRemoved ? connection.toPin.node.onConnectionRemoved() : null;
-        
-        // Delete connection from connection collection
-        this.connections.delete(connection.id);
+					// Delete connection from connection collection
+					const connectionDeleted = this.connections.delete(c.id)
 
-        this.emit('connections:update', this.connections);
-    }
+					this.emit('connections:update', this.connections)
+				})
+			)
 
-    toJSON() {
-        const nodes = [...this.nodes.values()].map(n => JSON.parse(n.toJSON()));
-        const connections = [...this.connections.values()].map(c => JSON.parse(c.toJSON()));
+			this.emit('nodes:update', this.nodes)
+		}
+	}
 
-        return JSON.stringify({
-            nodes,
-            connections
-        });
-    }
+	addConnection(connection: Connection) {
+		this.connections.set(connection.id, connection)
+		const { onConnectionAdded: foca } = connection.fromPin.node
+		_.isFunction(foca) && foca()
+
+		const { onConnectionAdded: toca } = connection.toPin.node
+		_.isFunction(toca) && toca()
+
+		this.emit('connections:update', this.connections)
+	}
+
+	removeConnection(connection: Connection) {
+		// Reset toPin value to its default value
+		connection.toPin.value = connection.toPin.defaultValue
+
+		// Remove event listener on connection
+		connection.removeEventListener()
+
+		// Remove connection from fromPin / toPin
+		_.pull(connection.fromPin.connections, connection)
+		_.pull(connection.toPin.connections, connection)
+
+		// Run onConncetionRemoved on fromPin node and toPin node
+		const { onConnectionRemoved: focr } = connection.fromPin.node
+		_.isFunction(focr) && focr()
+
+		const { onConnectionRemoved: tocr } = connection.toPin.node
+		_.isFunction(tocr) && tocr()
+
+		// Delete connection from connection collection
+		this.connections.delete(connection.id)
+
+		this.emit('connections:update', this.connections)
+	}
+
+	toJSON() {
+		const nodes = [...this.nodes.values()].map((n) => JSON.parse(n.toJSON()))
+		const connections = [...this.connections.values()].map((c) =>
+			JSON.parse(c.toJSON())
+		)
+
+		return JSON.stringify({
+			nodes,
+			connections,
+		})
+	}
 }
 
-export default new Store();
+export default new Store()

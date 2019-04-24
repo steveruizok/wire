@@ -1,110 +1,103 @@
-import * as EventEmitter from 'eventemitter3';
-import * as _ from 'lodash';
-import {v4 as uuid} from 'uuid';
+import * as EventEmitter from 'eventemitter3'
+import * as _ from 'lodash'
+import { v4 as uuid } from 'uuid'
 
-import ValueTypes from './misc/ValueTypes';
-import Node from './Node';
-import Connection from './Connection';
+import ValueTypes from './misc/ValueTypes'
+import Node from './Node'
+import Connection from './Connection'
 
-import {Wire} from './misc/types';
+import { Wire, ValueType } from './misc/types'
 
 export default class Pin extends EventEmitter {
+	id: string
+	label: string
+	isInputPin: boolean
+	_value: any
+	defaultValue: any
+	node: Node
+	index: number
+	valueType?: ValueType
+	enumerableValue?: boolean
+	connections: Connection[]
 
-	id: string;
-	label: string;
-	isInputPin: boolean;
-	_value: any;
-	defaultValue: any;
-	node: Node;
-	index: number;
-	valueType?: string;
-	enumerableValue?: boolean;
-	connections: Connection[];
+	constructor(
+		props: Wire.Node.PinProps = {} as Wire.Node.PinProps,
+		node: Node,
+		isInputPin: boolean = false,
+		index: number
+	) {
+		super()
 
-  	constructor(props: Wire.Node.PinProps, node: Node, isInputPin: boolean = false, index: number) {
-		super();
-		
-		props = _.defaults(props, {
-			id: uuid(),
-			label: 'Untitled',
-			enumerableValue: false
-		});
+		const {
+			id = uuid(),
+			label = 'Untitled',
+			enumerableValue = false,
+			value,
+			valueType,
+			defaultValue,
+		} = props
 
-		this.node = node;
-		this.id = props.id;
-		this.label = props.label;
-		this.value = props.value || props.defaultValue;
-		this.defaultValue = props.defaultValue;
-		this.valueType = props.valueType;
-		this.enumerableValue = props.enumerableValue;
-		this.isInputPin = isInputPin;
-		this.index = index;
-		this.connections = [];
-  	}
+		this.node = node
+		this.id = id
+		this.label = label
+		this.value = value || defaultValue
+		this.defaultValue = defaultValue
+		this.valueType = valueType
+		this.enumerableValue = enumerableValue
+		this.isInputPin = isInputPin
+		this.index = index
+		this.connections = []
+	}
 
-  	validateValue(value: any) {
-
-		let validator = (value: any) => true;
-    
-		switch(this.valueType) {
-			case ValueTypes.STRING:
-				validator = _.isString;
-				break;
-			case ValueTypes.NUMBER:
-				validator = (value) => !isNaN(value * 1);
-				break;
-			case ValueTypes.BOOLEAN:
-				validator = _.isBoolean;
-				break;
-			case ValueTypes.OBJECT:
-				validator = _.isObject;
-				break;
-			case ValueTypes.FUNCTION:
-				validator = _.isFunction;
-				break;
-			case ValueTypes.EVENT:
-				validator = (value) => value instanceof EventEmitter;
-				break;
+	validateValue(value: any) {
+		const validators = {
+			String: _.isString,
+			Number: (value: any) => !isNaN(value * 1),
+			Boolean: _.isBoolean,
+			Object: _.isObject,
+			Function: _.isFunction,
+			Event: (value: any) => value instanceof EventEmitter,
 		}
+
+		const validator: (value: any) => boolean = validators[this.valueType]
 
 		if (this.enumerableValue) {
 			if (_.isArray(value) && value.length) {
-				return _.every(value, validator);
+				return _.every(value, validator)
 			} else {
-				return false;
+				return false
 			}
 		} else {
-			return validator(value);
+			return validator ? validator(value) : true
 		}
 	}
 
-	toJSON() {
-		return JSON.stringify({
+	toJSON = () =>
+		JSON.stringify({
 			id: this.id,
 			label: this.label,
 			value: this.value || this.defaultValue,
 			defaultValue: this.defaultValue,
 			valueType: this.valueType,
-			enumerableValue: this.enumerableValue
-		});
-	}
+			enumerableValue: this.enumerableValue,
+		})
 
 	get value() {
-		return this._value;
+		return this._value
 	}
-	  
+
 	set value(value: any) {
 		if (this.validateValue(value)) {
-			this._value = value;
-			this.emit('update', value);
+			this._value = value
+			this.emit('update', value)
 
 			if (this.node.initialized && this.isInputPin) {
-				this.node.compute ? this.node.compute() : null;
+				this.node.compute && this.node.compute()
 			}
 		}
 	}
 
 	get connected() {
-		return !!this.connections.length;
+		return !!this.connections.length
 	}
 }
